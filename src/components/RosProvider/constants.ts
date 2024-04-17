@@ -1,0 +1,1 @@
+export const ROS_WEBSOCKET_URL = "ws://localhost:9090";
