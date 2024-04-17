@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import ROSLIB from "roslib";
 
-export const rosContext = createContext<[ROSLIB.Ros, ROSLIB.Topic] | null>(null);
+export const rosContext = createContext<ROSLIB.Ros | null>(null);
 
 export const useRosContext = () => {
   if (!rosContext) {
