@@ -3,27 +3,37 @@ import { Container, ChartContainer } from "./styles";
 import { Grid, Typography } from "@mui/material";
 import { useLogic } from "./useLogic";
 
-
 export const MotorInfo = () => {
-  const { motor1Monitoring, motor2Monitoring, motor3Monitoring, viewMotor1Data} = useLogic();
+  const {
+    motor1Monitoring,
+    motor2Monitoring,
+    motor3Monitoring,
+    viewMotor1Data,
+    viewMotor2Data,
+    viewMotor3Data,
+  } = useLogic();
   return (
     <Container>
       <Grid container direction="column">
         <Grid item xs={4}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
-              Motor1 info: {motor1Monitoring.y}
-              {/* Motor1 circleArray: {JSON.stringify(viewMotor1Data)} */}
+              Motor1 angle (real): {motor1Monitoring.y}
             </Typography>
             <LineChart
-              xAxis={[{ data: viewMotor1Data.time}]}
+              xAxis={[{ data: viewMotor1Data.time }]}
+              yAxis={[{ min: -150, max: 150 }]}
               series={[
                 {
-                  data: viewMotor1Data.angle,
+                  data: viewMotor1Data.specifiedAngle,
+                },
+                {
+                  data: viewMotor1Data.realAngle,
                 },
               ]}
-              height={150}
-              margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+              skipAnimation = {true}
+              height={300}
+              margin={{ left: 30, right: 30, top: 15, bottom: 30 }}
               grid={{ vertical: true, horizontal: true }}
             />
           </ChartContainer>
@@ -31,18 +41,22 @@ export const MotorInfo = () => {
         <Grid item xs={4}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
-              Motor2 info: {motor2Monitoring.y}
+              Motor2 angle (real): {motor2Monitoring.y}
             </Typography>
-
             <LineChart
-              xAxis={[{ data: [1, 2, 3, 5, 8, 11] }]}
+              xAxis={[{ data: viewMotor2Data.time }]}
+              yAxis={[{ min: -150, max: 150 }]}
               series={[
                 {
-                  data: [1, 5.5, 2, 8.5, 1.5, 5],
+                  data: viewMotor2Data.specifiedAngle,
+                },
+                {
+                  data: viewMotor2Data.realAngle,
                 },
               ]}
-              height={150}
-              margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+              skipAnimation = {true}
+              height={300}
+              margin={{ left: 30, right: 30, top: 15, bottom: 30 }}
               grid={{ vertical: true, horizontal: true }}
             />
           </ChartContainer>
@@ -50,18 +64,23 @@ export const MotorInfo = () => {
         <Grid item xs={4}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
-              Motor3 info: {Math.trunc(motor3Monitoring.z)}
+              Motor3 angle (real): {motor3Monitoring.y}
             </Typography>
             <LineChart
-              xAxis={[{ data: [1, 2, 3, 5, 8, 11] }]}
+              xAxis={[{ data: viewMotor3Data.time }]}
+              yAxis={[{ min: -150, max: 150 }]}
               series={[
                 {
-                  data: [1, 5.5, 2, 8.5, 1.5, 5],
+                  data: viewMotor3Data.specifiedAngle,
+                },
+                {
+                  data: viewMotor3Data.realAngle,
                 },
               ]}
-              height={150}
-              margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+              height={300}
+              margin={{ left: 30, right: 30, top: 15, bottom: 30 }}
               grid={{ vertical: true, horizontal: true }}
+              skipAnimation = {true}
             />
           </ChartContainer>
         </Grid>

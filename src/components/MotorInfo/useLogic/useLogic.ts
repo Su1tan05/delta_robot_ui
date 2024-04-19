@@ -2,7 +2,6 @@ import { useEffect, useReducer, useState } from "react";
 import { useRosContext } from "../../RosProvider";
 import ROSLIB from "roslib";
 import { CircleArray } from "../../../models/CircleArray";
-import { debounce, throttle } from "lodash";
 
 type MotorMonitoringDTO = {
   x: number;
@@ -10,6 +9,8 @@ type MotorMonitoringDTO = {
   z: number;
 };
 const motor1CircleArray = new CircleArray<MotorMonitoringDTO>(10);
+const motor2CircleArray = new CircleArray<MotorMonitoringDTO>(10);
+const motor3CircleArray = new CircleArray<MotorMonitoringDTO>(10);
 
 export const useLogic = () => {
   const rosContextResult = useRosContext();
@@ -61,11 +62,16 @@ export const useLogic = () => {
     });
 
     motor2MonitoringSub.subscribe(function (message: any) {
-      //   setMotor2Monitoring({
-      //     x: message.x,
-      //     y: message.y,
-      //     z: message.z,
-      //   });
+        setMotor2Monitoring({
+          x: message.x,
+          y: message.y,
+          z: message.z,
+        });
+        motor2CircleArray.add({
+          x: message.x,
+          y: message.y,
+          z: message.z,
+        });
     });
 
     var motor3MonitoringSub = new ROSLIB.Topic({
@@ -75,11 +81,16 @@ export const useLogic = () => {
     });
 
     motor3MonitoringSub.subscribe(function (message: any) {
-      //   setMotor3Monitoring({
-      //     x: message.x,
-      //     y: message.y,
-      //     z: message.z,
-      //   });
+        setMotor3Monitoring({
+          x: message.x,
+          y: message.y,
+          z: message.z,
+        });
+        motor3CircleArray.add({
+          x: message.x,
+          y: message.y,
+          z: message.z,
+        });
     });
 
     return () => {
@@ -90,8 +101,21 @@ export const useLogic = () => {
   }, []);
 
   const viewMotor1Data = {
-    angle: motor1CircleArray.state.map((item) => item.y),
+    specifiedAngle: motor1CircleArray.state.map((item) => item.x),
+    realAngle: motor1CircleArray.state.map((item) => item.y),
     time: motor1CircleArray.state.map((item) => item.z),
+  };
+
+  const viewMotor2Data = {
+    specifiedAngle: motor2CircleArray.state.map((item) => item.x),
+    realAngle: motor2CircleArray.state.map((item) => item.y),
+    time: motor2CircleArray.state.map((item) => item.z),
+  };
+
+  const viewMotor3Data = {
+    specifiedAngle: motor3CircleArray.state.map((item) => item.x),
+    realAngle: motor3CircleArray.state.map((item) => item.y),
+    time: motor3CircleArray.state.map((item) => item.z),
   };
 
   return {
@@ -99,5 +123,7 @@ export const useLogic = () => {
     motor2Monitoring,
     motor3Monitoring,
     viewMotor1Data,
+    viewMotor2Data,
+    viewMotor3Data
   };
 };
