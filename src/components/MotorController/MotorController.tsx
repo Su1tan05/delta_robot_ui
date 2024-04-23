@@ -1,12 +1,12 @@
 import { Box, Button, Slider, Typography } from "@mui/material";
 import { Container, SliderContainer } from "./styles";
 import { useLogic } from "./useLogic";
-import { SliderHandlerTypes } from "./enums";
+import { SliderHandlerTypes } from "./enum";
 
-export const PidTuning = () => {
+export const MotorController = () => {
   const {
-    getSliderChangeHandler,
     handleResetSliders,
+    getSliderChangeHandler,
     slider1Value,
     slider2Value,
     slider3Value,
@@ -14,76 +14,77 @@ export const PidTuning = () => {
 
   return (
     <Container>
+      <h1>Motor controller</h1>
       <SliderContainer>
         <Box>
           <Typography variant="body1" component="span">
-            KP
+            Motor 1
           </Typography>
           <Slider
             size="small"
             defaultValue={0}
             aria-label="Small"
             max={100}
-            min={0}
-            step={0.1}
-            valueLabelDisplay="auto"
+            min={-100}
             value={slider1Value ?? 0}
+            valueLabelDisplay="auto"
             onChange={
-              getSliderChangeHandler(SliderHandlerTypes.P_slider).ChangeHangler
+              getSliderChangeHandler(SliderHandlerTypes.Motor1_slider)
+                .ChangeHangler
             }
             onChangeCommitted={
-              getSliderChangeHandler(SliderHandlerTypes.P_slider)
+              getSliderChangeHandler(SliderHandlerTypes.Motor1_slider)
                 .ChangeCommitHandler
             }
           />
         </Box>
         <Box>
           <Typography variant="body1" component="span">
-            KI
+            Motor 2
           </Typography>
           <Slider
             size="small"
             defaultValue={0}
             aria-label="Small"
             max={100}
-            min={0}
-            step={0.1}
+            min={-100}
             value={slider2Value ?? 0}
             valueLabelDisplay="auto"
             onChange={
-              getSliderChangeHandler(SliderHandlerTypes.I_slider).ChangeHangler
+              getSliderChangeHandler(SliderHandlerTypes.Motor2_slider)
+                .ChangeHangler
             }
             onChangeCommitted={
-              getSliderChangeHandler(SliderHandlerTypes.I_slider)
+              getSliderChangeHandler(SliderHandlerTypes.Motor2_slider)
                 .ChangeCommitHandler
             }
           />
         </Box>
         <Box>
           <Typography variant="body1" component="span">
-            KD
+            Motor 3
           </Typography>
           <Slider
             size="small"
             defaultValue={0}
             aria-label="Small"
             max={100}
-            min={0}
-            step={0.1}
+            min={-100}
             value={slider3Value ?? 0}
             valueLabelDisplay="auto"
             onChange={
-              getSliderChangeHandler(SliderHandlerTypes.D_slider).ChangeHangler
+              getSliderChangeHandler(SliderHandlerTypes.Motor3_slider)
+                .ChangeHangler
             }
             onChangeCommitted={
-              getSliderChangeHandler(SliderHandlerTypes.D_slider)
+              getSliderChangeHandler(SliderHandlerTypes.Motor3_slider)
                 .ChangeCommitHandler
             }
           />
         </Box>
       </SliderContainer>
       <Button variant="outlined" onClick={handleResetSliders}>
-        RESET PID
+        RESET
       </Button>
     </Container>
   );

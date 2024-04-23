@@ -1,1 +1,1 @@
-export const ROS_WEBSOCKET_URL = "ws://localhost:9090";
+export const ROS_WEBSOCKET_URL = "ws://192.168.0.11:9090";
