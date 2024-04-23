@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRosContext } from "../../RosProvider";
 import ROSLIB from "roslib";
 import { CircleArray } from "../../../models/CircleArray";
@@ -13,8 +13,7 @@ const motor2CircleArray = new CircleArray<MotorMonitoringDTO>(10);
 const motor3CircleArray = new CircleArray<MotorMonitoringDTO>(10);
 
 export const useLogic = () => {
-  const rosContextResult = useRosContext();
-  const ros = rosContextResult;
+  const ros = useRef(useRosContext());
   const [motor1Monitoring, setMotor1Monitoring] = useState({
     x: 0,
     y: 0,
@@ -32,12 +31,9 @@ export const useLogic = () => {
   });
 
   useEffect(() => {
-    if (!ros) {
-      return;
-    }
 
     var motor1MonitoringSub = new ROSLIB.Topic({
-      ros: ros,
+      ros: ros.current!,
       name: "/motor1_monitoring",
       messageType: "geometry_msgs/Vector3",
     });
@@ -56,7 +52,7 @@ export const useLogic = () => {
     });
 
     var motor2MonitoringSub = new ROSLIB.Topic({
-      ros: ros,
+      ros: ros.current!,
       name: "/motor2_monitoring",
       messageType: "geometry_msgs/Vector3",
     });
@@ -75,7 +71,7 @@ export const useLogic = () => {
     });
 
     var motor3MonitoringSub = new ROSLIB.Topic({
-      ros: ros,
+      ros: ros.current!,
       name: "/motor3_monitoring",
       messageType: "geometry_msgs/Vector3",
     });
@@ -93,10 +89,14 @@ export const useLogic = () => {
         });
     });
 
-    return () => {
+    const handleUnsubscribe = () => {
       motor1MonitoringSub.unsubscribe();
       motor2MonitoringSub.unsubscribe();
       motor3MonitoringSub.unsubscribe();
+    }
+
+    return () => {
+      handleUnsubscribe();
     };
   }, []);
 

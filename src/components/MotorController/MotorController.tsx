@@ -1,22 +1,16 @@
 import { Box, Button, Slider, Typography } from "@mui/material";
 import { Container, SliderContainer } from "./styles";
 import { useLogic } from "./useLogic";
-import ROSLIB from "roslib";
-import { useState } from "react";
-
+import { SliderHandlerTypes } from "./enum";
 
 export const MotorController = () => {
-
-  const [slider1Value, setSlider1Value] = useState<number | number[]>();
-  const [slider2Value, setSlider2Value] = useState<number | number[]>();
-  const [slider3Value, setSlider3Value] = useState<number | number[]>();
-
   const {
-    setMessage1,
-    setMessage2,
-    setMessage3,
-    stopAllMotors,
-  } = useLogic() ?? {};
+    handleResetSliders,
+    getSliderChangeHandler,
+    slider1Value,
+    slider2Value,
+    slider3Value,
+  } = useLogic();
 
   return (
     <Container>
@@ -34,14 +28,14 @@ export const MotorController = () => {
             min={-100}
             value={slider1Value ?? 0}
             valueLabelDisplay="auto"
-            onChange={(e, value) => {{
-              setSlider1Value(value);
-            }}}
-            onChangeCommitted={(e, value) => {
-              if (setMessage1) {
-                setMessage1(new ROSLIB.Message({ data: value }));
-              }
-            }}
+            onChange={
+              getSliderChangeHandler(SliderHandlerTypes.Motor1_slider)
+                .ChangeHangler
+            }
+            onChangeCommitted={
+              getSliderChangeHandler(SliderHandlerTypes.Motor1_slider)
+                .ChangeCommitHandler
+            }
           />
         </Box>
         <Box>
@@ -56,14 +50,14 @@ export const MotorController = () => {
             min={-100}
             value={slider2Value ?? 0}
             valueLabelDisplay="auto"
-            onChange={(e, value) => {{
-              setSlider2Value(value);
-            }}}
-            onChangeCommitted={(e, value) => {
-              if (setMessage2) {
-                setMessage2(new ROSLIB.Message({ data: value }));
-              }
-            }}
+            onChange={
+              getSliderChangeHandler(SliderHandlerTypes.Motor2_slider)
+                .ChangeHangler
+            }
+            onChangeCommitted={
+              getSliderChangeHandler(SliderHandlerTypes.Motor2_slider)
+                .ChangeCommitHandler
+            }
           />
         </Box>
         <Box>
@@ -78,28 +72,18 @@ export const MotorController = () => {
             min={-100}
             value={slider3Value ?? 0}
             valueLabelDisplay="auto"
-            onChange={(e, value) => {{
-              setSlider3Value(value);
-            }}}
-            onChangeCommitted={(e, value) => {
-              if (setMessage3) {
-                setMessage3(new ROSLIB.Message({ data: value }));
-              }
-            }}
+            onChange={
+              getSliderChangeHandler(SliderHandlerTypes.Motor3_slider)
+                .ChangeHangler
+            }
+            onChangeCommitted={
+              getSliderChangeHandler(SliderHandlerTypes.Motor3_slider)
+                .ChangeCommitHandler
+            }
           />
         </Box>
       </SliderContainer>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          setSlider1Value(0 as number);
-          setSlider2Value(0 as number);
-          setSlider3Value(0 as number);
-          if(stopAllMotors) {
-            stopAllMotors();
-          }
-        }}
-      >
+      <Button variant="outlined" onClick={handleResetSliders}>
         RESET
       </Button>
     </Container>

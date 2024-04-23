@@ -26,9 +26,11 @@ export const MotorInfo = () => {
               series={[
                 {
                   data: viewMotor1Data.specifiedAngle,
+                  label: 'Заданый угол'
                 },
                 {
                   data: viewMotor1Data.realAngle,
+                  label: 'Значение угла с энкодера'
                 },
               ]}
               skipAnimation = {true}
@@ -49,9 +51,11 @@ export const MotorInfo = () => {
               series={[
                 {
                   data: viewMotor2Data.specifiedAngle,
+                  label: 'Заданый угол'
                 },
                 {
                   data: viewMotor2Data.realAngle,
+                  label: 'Значение угла с энкодера'
                 },
               ]}
               skipAnimation = {true}
@@ -72,9 +76,11 @@ export const MotorInfo = () => {
               series={[
                 {
                   data: viewMotor3Data.specifiedAngle,
+                  label: 'Заданый угол'
                 },
                 {
                   data: viewMotor3Data.realAngle,
+                  label: 'Значение угла с энкодера'
                 },
               ]}
               height={300}

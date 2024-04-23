@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useRosContext } from "../../RosProvider";
+import { useState } from "react";
 import ROSLIB from "roslib";
+import { SliderHandlerTypes } from "../enum";
+import { useRosTopics } from "./useRosTopics";
 
 export type MotorData = {
   motor1Angle: number;
@@ -9,87 +10,64 @@ export type MotorData = {
 };
 
 export const useLogic = () => {
-  const rosContextResult = useRosContext();
-  const ros = rosContextResult;
+  const {
+    stopMotor1Topic,
+    stopMotor2Topic,
+    stopMotor3Topic,
+    setMotor1AngleTopic,
+    setMotor2AngleTopic,
+    setMotor3AngleTopic,
+  } = useRosTopics();
 
-  if (!ros) {
-    return;
-  }
+  const [slider1Value, setSlider1Value] = useState(0);
+  const [slider2Value, setSlider2Value] = useState(0);
+  const [slider3Value, setSlider3Value] = useState(0);
 
-  const stopMotor1 = new ROSLIB.Topic({
-    ros: ros,
-    name: "/stop_motor1",
-    messageType: "std_msgs/Empty",
+  const handleResetSliders = () => {
+    setSlider1Value(0);
+    setSlider2Value(0);
+    setSlider3Value(0);
+    stopMotor1Topic.publish(new ROSLIB.Message({}));
+    stopMotor2Topic.publish(new ROSLIB.Message({}));
+    stopMotor3Topic.publish(new ROSLIB.Message({}));
+  };
+
+  const getSliderChangeHandler = (sliderType: SliderHandlerTypes) => ({
+    ChangeHangler: (_e: Event, value: number | number[]) => {
+      if (Array.isArray(value)) {
+        return;
+      }
+      if (sliderType === SliderHandlerTypes.Motor1_slider) {
+        setSlider1Value(value);
+      }
+      if (sliderType === SliderHandlerTypes.Motor2_slider) {
+        setSlider2Value(value);
+      }
+      if (sliderType === SliderHandlerTypes.Motor3_slider) {
+        setSlider3Value(value);
+      }
+    },
+    ChangeCommitHandler: (_e: unknown, value: number | number[]) => {
+      if (Array.isArray(value)) {
+        return;
+      }
+      if (sliderType === SliderHandlerTypes.Motor1_slider) {
+        setMotor1AngleTopic.publish(new ROSLIB.Message({ data: value }));
+      }
+      if (sliderType === SliderHandlerTypes.Motor2_slider) {
+        setMotor2AngleTopic.publish(new ROSLIB.Message({ data: value }));
+      }
+      if (sliderType === SliderHandlerTypes.Motor3_slider) {
+        setMotor3AngleTopic.publish(new ROSLIB.Message({ data: value }));
+      }
+    },
   });
 
-  const stopMotor2 = new ROSLIB.Topic({
-    ros: ros,
-    name: "/stop_motor2",
-    messageType: "std_msgs/Empty",
-  });
-  
-  const stopMotor3 = new ROSLIB.Topic({
-    ros: ros,
-    name: "/stop_motor3",
-    messageType: "std_msgs/Empty",
-  });
-
-  const setMotor1Angle = new ROSLIB.Topic({
-    ros: ros,
-    name: "/set_angle_motor1",
-    messageType: "std_msgs/Float32",
-  });
-
-  
-  const setMotor2Angle = new ROSLIB.Topic({
-    ros: ros,
-    name: "/set_angle_motor2",
-    messageType: "std_msgs/Float32",
-  });
-
-  
-  const setMotor3Angle = new ROSLIB.Topic({
-    ros: ros,
-    name: "/set_angle_motor3",
-    messageType: "std_msgs/Float32",
-  });
-
-  const [message1, setMessage1] = useState(() => {
-    return new ROSLIB.Message({
-      data: 0,
-    });
-  });
-
-  const [message2, setMessage2] = useState(() => {
-    return new ROSLIB.Message({
-      data: 0,
-    });
-  });
-
-  const [message3, setMessage3] = useState(() => {
-    return new ROSLIB.Message({
-      data: 0,
-    });
-  });
-
-  const stopAllMotors = () => {
-    console.log("stop all motors");
-    stopMotor1.publish(new ROSLIB.Message({}));
-    stopMotor2.publish(new ROSLIB.Message({}));
-    stopMotor3.publish(new ROSLIB.Message({}));
-  }
-
-  useEffect(() => {
-    setMotor1Angle.publish(message1);
-  }, [message1]);
-
-  useEffect(() => {
-    setMotor2Angle.publish(message2);
-  }, [message2]);
-
-  useEffect(() => {
-    setMotor3Angle.publish(message3);
-  }, [message3]);
-
-  return { setMessage1, setMessage2, setMessage3, stopAllMotors};
+  return {
+    slider1Value,
+    slider2Value,
+    slider3Value,
+    handleResetSliders,
+    getSliderChangeHandler,
+  };
 };
