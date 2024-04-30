@@ -2,3 +2,8 @@ export * from "./PidTuning";
 export * from "./RosProvider";
 export * from "./MotorInfo";
 export * from "./MotorController";
+export * from "./TrajectoryController";
+export * from "./Header";
+export * from "./Plot3D"
+export * from "./ActionButtons"
+export * from "./UploadFile"

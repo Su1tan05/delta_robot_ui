@@ -23,7 +23,7 @@ export const PidTuning = () => {
             size="small"
             defaultValue={0}
             aria-label="Small"
-            max={100}
+            max={200}
             min={0}
             step={0.1}
             valueLabelDisplay="auto"

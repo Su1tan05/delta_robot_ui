@@ -5,9 +5,7 @@ import { useLogic } from "./useLogic";
 
 export const MotorInfo = () => {
   const {
-    motor1Monitoring,
-    motor2Monitoring,
-    motor3Monitoring,
+    motorData,
     viewMotor1Data,
     viewMotor2Data,
     viewMotor3Data,
@@ -18,7 +16,7 @@ export const MotorInfo = () => {
         <Grid item xs={4}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
-              Motor1 angle (real): {motor1Monitoring.y}
+              Motor1 angle (real): {motorData.realTheta1}
             </Typography>
             <LineChart
               xAxis={[{ data: viewMotor1Data.time }]}
@@ -43,7 +41,7 @@ export const MotorInfo = () => {
         <Grid item xs={4}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
-              Motor2 angle (real): {motor2Monitoring.y}
+              Motor2 angle (real): {motorData.realTheta2}
             </Typography>
             <LineChart
               xAxis={[{ data: viewMotor2Data.time }]}
@@ -68,7 +66,7 @@ export const MotorInfo = () => {
         <Grid item xs={4}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
-              Motor3 angle (real): {motor3Monitoring.y}
+              Motor3 angle (real): {motorData.realTheta3}
             </Typography>
             <LineChart
               xAxis={[{ data: viewMotor3Data.time }]}

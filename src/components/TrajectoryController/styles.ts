@@ -6,10 +6,3 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
 `;
-
-export const SliderContainer = styled.div`
-`;
-
-export const ButtonContainer = styled.div`
-    max-width: 300px;
-`;

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { useRosContext } from "../../RosProvider";
-import ROSLIB from "roslib";
+import { useEffect } from "react";
 import { CircleArray } from "../../../models/CircleArray";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
 
 type MotorMonitoringDTO = {
   x: number;
@@ -13,92 +13,44 @@ const motor2CircleArray = new CircleArray<MotorMonitoringDTO>(10);
 const motor3CircleArray = new CircleArray<MotorMonitoringDTO>(10);
 
 export const useLogic = () => {
-  const ros = useRef(useRosContext());
-  const [motor1Monitoring, setMotor1Monitoring] = useState({
-    x: 0,
-    y: 0,
-    z: 0,
+  const initialTheta1 = useSelector(
+    (state: RootState) => state.motorinfo.initialTheta1
+  );
+  const realTheta1 = useSelector(
+    (state: RootState) => state.motorinfo.realTheta1
+  );
+  const initialTheta2 = useSelector(
+    (state: RootState) => state.motorinfo.initialTheta2
+  );
+  const realTheta2 = useSelector(
+    (state: RootState) => state.motorinfo.realTheta2
+  );
+  const initialTheta3 = useSelector(
+    (state: RootState) => state.motorinfo.initialTheta3
+  );
+  const realTheta3 = useSelector(
+    (state: RootState) => state.motorinfo.realTheta3
+  );
+
+  const time = useSelector((state: RootState) => state.motorinfo.time);
+
+  motor1CircleArray.add({
+    x: initialTheta1,
+    y: realTheta1,
+    z: time,
   });
-  const [motor2Monitoring, setMotor2Monitoring] = useState({
-    x: 0,
-    y: 0,
-    z: 0,
-  });
-  const [motor3Monitoring, setMotor3Monitoring] = useState({
-    x: 0,
-    y: 0,
-    z: 0,
+
+  motor2CircleArray.add({
+    x: initialTheta2,
+    y: realTheta2,
+    z: time,
   });
 
-  useEffect(() => {
-
-    var motor1MonitoringSub = new ROSLIB.Topic({
-      ros: ros.current!,
-      name: "/motor1_monitoring",
-      messageType: "geometry_msgs/Vector3",
-    });
-
-    motor1MonitoringSub.subscribe((message: any) => {
-      setMotor1Monitoring({
-        x: message.x,
-        y: message.y,
-        z: message.z,
-      });
-      motor1CircleArray.add({
-        x: message.x,
-        y: message.y,
-        z: message.z,
-      });
-    });
-
-    var motor2MonitoringSub = new ROSLIB.Topic({
-      ros: ros.current!,
-      name: "/motor2_monitoring",
-      messageType: "geometry_msgs/Vector3",
-    });
-
-    motor2MonitoringSub.subscribe(function (message: any) {
-        setMotor2Monitoring({
-          x: message.x,
-          y: message.y,
-          z: message.z,
-        });
-        motor2CircleArray.add({
-          x: message.x,
-          y: message.y,
-          z: message.z,
-        });
-    });
-
-    var motor3MonitoringSub = new ROSLIB.Topic({
-      ros: ros.current!,
-      name: "/motor3_monitoring",
-      messageType: "geometry_msgs/Vector3",
-    });
-
-    motor3MonitoringSub.subscribe(function (message: any) {
-        setMotor3Monitoring({
-          x: message.x,
-          y: message.y,
-          z: message.z,
-        });
-        motor3CircleArray.add({
-          x: message.x,
-          y: message.y,
-          z: message.z,
-        });
-    });
-
-    const handleUnsubscribe = () => {
-      motor1MonitoringSub.unsubscribe();
-      motor2MonitoringSub.unsubscribe();
-      motor3MonitoringSub.unsubscribe();
-    }
-
-    return () => {
-      handleUnsubscribe();
-    };
-  }, []);
+  motor3CircleArray.add({
+    x: initialTheta3,
+    y: realTheta3,
+    z: time,
+  });
 
   const viewMotor1Data = {
     specifiedAngle: motor1CircleArray.state.map((item) => item.x),
@@ -119,11 +71,16 @@ export const useLogic = () => {
   };
 
   return {
-    motor1Monitoring,
-    motor2Monitoring,
-    motor3Monitoring,
+    motorData: {
+      initialTheta1,
+      realTheta1,
+      initialTheta2,
+      realTheta2,
+      initialTheta3,
+      realTheta3,
+    },
     viewMotor1Data,
     viewMotor2Data,
-    viewMotor3Data
+    viewMotor3Data,
   };
 };

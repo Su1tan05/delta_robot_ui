@@ -1,36 +1,37 @@
-import { Grid } from "@mui/material";
-import Iframe from 'react-iframe';
-
+import { RosProvider, Header } from "./components";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
-  PidTuning,
-  RosProvider,
-  MotorInfo,
-  MotorController,
-} from "./components";
+  HomePage,
+  ManualControllPage,
+  PlotsPage,
+  SettingsPage,
+  TablePage,
+} from "./pages";
+import { store } from "./app/store";
+import { Provider } from "react-redux";
 
 export function App() {
   return (
-    <RosProvider>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Grid item xs={12}>
-            <PidTuning />
-          </Grid>
-          <Grid item xs={12}>
-            <MotorController />
-          </Grid>
-        </Grid>
-        <Grid item xs={8}>
-          <MotorInfo />
-        </Grid>
-      </Grid>
-      {/* <Iframe url="http://localhost:1111/"
+    <Provider store={store}>
+    <BrowserRouter>
+      <RosProvider>
+        <Header />
+          <Routes>
+            <Route path="manualControll" element={<ManualControllPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="plots" element={<PlotsPage />} />
+            <Route path="table" element={<TablePage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Routes>
+        {/* <Iframe url="http://localhost:1111/"
         width="1200px"
         height="600px"
         id=""
         className=""
         display="block"
         position="relative"/> */}
-    </RosProvider>
+      </RosProvider>
+    </BrowserRouter>
+    </Provider>
   );
 }
