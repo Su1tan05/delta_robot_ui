@@ -7,3 +7,4 @@ export * from "./Header";
 export * from "./Plot3D"
 export * from "./ActionButtons"
 export * from "./UploadFile"
+export * from "./TabPanel"

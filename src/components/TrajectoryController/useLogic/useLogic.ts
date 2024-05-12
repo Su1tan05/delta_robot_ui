@@ -5,11 +5,11 @@ import { set } from "lodash";
 
 export const useLogic = () => {
 
-  const ros = useRef(useRosContext());
+  const ros = useRosContext();
 
   const setMotor1AngleTopic = useRef(
     new ROSLIB.Topic({
-      ros: ros.current!,
+      ros: ros!,
       name: "/set_angle_motor1",
       messageType: "std_msgs/Float32",
     })

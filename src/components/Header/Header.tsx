@@ -31,7 +31,7 @@ export const Header = () => {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <IconButton sx={{ p: 0 }} onClick={handleClickLogo}>
+            <IconButton sx={{ p: 0 }} onClick={handleClickLogo} disableRipple>
               <img src={Logo} alt="logo" style={{ width: "50px" }} />
               <Typography
                 variant="h6"

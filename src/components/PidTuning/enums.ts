@@ -3,3 +3,9 @@ export enum SliderHandlerTypes {
     I_slider,
     D_slider
 }
+
+export enum Motor {
+    firstMotor = 0,
+    secondMotor = 1,
+    thirdMotor = 2
+}

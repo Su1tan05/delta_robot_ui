@@ -15,7 +15,8 @@ export const SeparationContainer = styled.div<SeparationContainerProps>`
 `;
 
 export const AditionalButtonsContainer = styled.div`
-  padding-top: 120px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 export const MainContainer = styled.div`

@@ -3,39 +3,7 @@ import { Container, SliderContainer } from "./styles";
 import { useLogic } from "./useLogic";
 import { SliderHandlerTypes } from "./enum";
 import { useState } from "react";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+import { TabPanel } from "../TabPanel";
 
 export const MotorController = () => {
   const {
@@ -61,11 +29,11 @@ export const MotorController = () => {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="Управление положением" {...a11yProps(0)} />
-            <Tab label="Управление углами" {...a11yProps(1)} />
+            <Tab label="Управление положением" />
+            <Tab label="Управление углами" />
           </Tabs>
         </Box>
-        <CustomTabPanel value={value} index={0}>
+        <TabPanel value={value} index={0}>
           <SliderContainer>
             <Box>
               <Typography variant="body1" component="span">
@@ -74,7 +42,7 @@ export const MotorController = () => {
               <Slider
                 size="small"
                 defaultValue={0}
-                style={{ width: "90vh" }}
+                style={{ width: "100%" }}
                 aria-label="Small"
                 max={100}
                 min={-100}
@@ -98,7 +66,7 @@ export const MotorController = () => {
                 size="small"
                 defaultValue={0}
                 aria-label="Small"
-                style={{ width: "90vh" }}
+                style={{ width: "100%" }}
                 max={100}
                 min={-100}
                 value={slider2Value ?? 0}
@@ -121,7 +89,7 @@ export const MotorController = () => {
                 size="small"
                 defaultValue={0}
                 aria-label="Small"
-                style={{ width: "90vh" }}
+                style={{ width: "100%" }}
                 max={100}
                 min={-100}
                 value={slider3Value ?? 0}
@@ -137,8 +105,8 @@ export const MotorController = () => {
               />
             </Box>
           </SliderContainer>
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
           <SliderContainer>
             <Box>
               <Typography variant="body1" component="span">
@@ -148,7 +116,7 @@ export const MotorController = () => {
                 size="small"
                 defaultValue={0}
                 aria-label="Small"
-                style={{ width: "90vh" }}
+                style={{ width: "100%" }}
                 max={100}
                 min={-100}
                 value={slider1Value ?? 0}
@@ -171,7 +139,7 @@ export const MotorController = () => {
                 size="small"
                 defaultValue={0}
                 aria-label="Small"
-                style={{ width: "90vh" }}
+                style={{ width: "100%" }}
                 max={100}
                 min={-100}
                 value={slider2Value ?? 0}
@@ -194,7 +162,7 @@ export const MotorController = () => {
                 size="small"
                 defaultValue={0}
                 aria-label="Small"
-                style={{ width: "90vh" }}
+                style={{ width: "100%" }}
                 max={100}
                 min={-100}
                 value={slider3Value ?? 0}
@@ -210,7 +178,7 @@ export const MotorController = () => {
               />
             </Box>
           </SliderContainer>
-        </CustomTabPanel>
+        </TabPanel>
       </Box>
       <Button variant="outlined" onClick={handleResetSliders}>
         RESET

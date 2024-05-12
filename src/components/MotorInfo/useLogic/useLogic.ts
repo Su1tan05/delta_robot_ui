@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { CircleArray } from "../../../models/CircleArray";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
+import { useAppSelector } from "../../../redux";
 
 type MotorMonitoringDTO = {
   x: number;
@@ -13,26 +11,27 @@ const motor2CircleArray = new CircleArray<MotorMonitoringDTO>(10);
 const motor3CircleArray = new CircleArray<MotorMonitoringDTO>(10);
 
 export const useLogic = () => {
-  const initialTheta1 = useSelector(
-    (state: RootState) => state.motorinfo.initialTheta1
-  );
-  const realTheta1 = useSelector(
-    (state: RootState) => state.motorinfo.realTheta1
-  );
-  const initialTheta2 = useSelector(
-    (state: RootState) => state.motorinfo.initialTheta2
-  );
-  const realTheta2 = useSelector(
-    (state: RootState) => state.motorinfo.realTheta2
-  );
-  const initialTheta3 = useSelector(
-    (state: RootState) => state.motorinfo.initialTheta3
-  );
-  const realTheta3 = useSelector(
-    (state: RootState) => state.motorinfo.realTheta3
+  const initialTheta1 = useAppSelector(
+    (state) => state.motorinfo.initialTheta1
   );
 
-  const time = useSelector((state: RootState) => state.motorinfo.time);
+  const realTheta1 = useAppSelector(
+    (state) => state.motorinfo.realTheta1
+  );
+  const initialTheta2 = useAppSelector(
+    (state) => state.motorinfo.initialTheta2
+  );
+  const realTheta2 = useAppSelector(
+    (state) => state.motorinfo.realTheta2
+  );
+  const initialTheta3 = useAppSelector(
+    (state) => state.motorinfo.initialTheta3
+  );
+  const realTheta3 = useAppSelector(
+    (state) => state.motorinfo.realTheta3
+  );
+
+  const time = useAppSelector((state) => state.motorinfo.time);
 
   motor1CircleArray.add({
     x: initialTheta1,

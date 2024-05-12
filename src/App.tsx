@@ -7,15 +7,15 @@ import {
   SettingsPage,
   TablePage,
 } from "./pages";
-import { store } from "./app/store";
+import { store } from "./redux/store";
 import { Provider } from "react-redux";
 
 export function App() {
   return (
     <Provider store={store}>
-    <BrowserRouter>
-      <RosProvider>
-        <Header />
+      <BrowserRouter>
+        <RosProvider>
+          <Header />
           <Routes>
             <Route path="manualControll" element={<ManualControllPage />} />
             <Route path="/" element={<HomePage />} />
@@ -23,15 +23,15 @@ export function App() {
             <Route path="table" element={<TablePage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Routes>
-        {/* <Iframe url="http://localhost:1111/"
+          {/* <Iframe url="http://localhost:1111/"
         width="1200px"
         height="600px"
         id=""
         className=""
         display="block"
         position="relative"/> */}
-      </RosProvider>
-    </BrowserRouter>
+        </RosProvider>
+      </BrowserRouter>
     </Provider>
   );
 }

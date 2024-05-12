@@ -12,8 +12,8 @@ export const MotorInfo = () => {
   } = useLogic();
   return (
     <Container>
-      <Grid container direction="column">
-        <Grid item xs={4}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
               Motor1 angle (real): {motorData.realTheta1}
@@ -24,11 +24,13 @@ export const MotorInfo = () => {
               series={[
                 {
                   data: viewMotor1Data.specifiedAngle,
-                  label: 'Заданый угол'
+                  label: 'Заданый угол',
+                  showMark: ({ index }) => index === 0,
                 },
                 {
                   data: viewMotor1Data.realAngle,
-                  label: 'Значение угла с энкодера'
+                  label: 'Значение угла с энкодера',
+                  showMark: ({ index }) => index === 0,
                 },
               ]}
               skipAnimation = {true}
@@ -38,7 +40,7 @@ export const MotorInfo = () => {
             />
           </ChartContainer>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
               Motor2 angle (real): {motorData.realTheta2}
@@ -49,11 +51,13 @@ export const MotorInfo = () => {
               series={[
                 {
                   data: viewMotor2Data.specifiedAngle,
-                  label: 'Заданый угол'
+                  label: 'Заданый угол',
+                  showMark: ({ index }) => index === 0
                 },
                 {
                   data: viewMotor2Data.realAngle,
-                  label: 'Значение угла с энкодера'
+                  label: 'Значение угла с энкодера',
+                  showMark: ({ index }) => index === 0
                 },
               ]}
               skipAnimation = {true}
@@ -63,7 +67,7 @@ export const MotorInfo = () => {
             />
           </ChartContainer>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <ChartContainer>
             <Typography variant="body1" component="span" textAlign="center">
               Motor3 angle (real): {motorData.realTheta3}
@@ -74,11 +78,13 @@ export const MotorInfo = () => {
               series={[
                 {
                   data: viewMotor3Data.specifiedAngle,
-                  label: 'Заданый угол'
+                  label: 'Заданый угол',
+                  showMark: ({ index }) => index === 0
                 },
                 {
                   data: viewMotor3Data.realAngle,
-                  label: 'Значение угла с энкодера'
+                  label: 'Значение угла с энкодера',
+                  showMark: ({ index }) => index === 0
                 },
               ]}
               height={300}
