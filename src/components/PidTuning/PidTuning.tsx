@@ -50,10 +50,6 @@ export const PidTuning = () => {
                 getSliderChangeHandler(value, SliderHandlerTypes.P_slider)
                   .ChangeHangler
               }
-              // onChangeCommitted={
-              //   getSliderChangeHandler(SliderHandlerTypes.P_slider)
-              //     .ChangeCommitHandler
-              // }
             />
           </Box>
           <Box>
@@ -64,7 +60,7 @@ export const PidTuning = () => {
               size="small"
               defaultValue={0}
               aria-label="Small"
-              max={50}
+              max={400}
               min={0}
               step={0.1}
               value={getSliderValues(value).slider2Value ?? 0}
@@ -73,10 +69,6 @@ export const PidTuning = () => {
                 getSliderChangeHandler(value, SliderHandlerTypes.I_slider)
                   .ChangeHangler
               }
-              // onChangeCommitted={
-              //   getSliderChangeHandler(SliderHandlerTypes.I_slider)
-              //     .ChangeCommitHandler
-              // }
             />
           </Box>
           <Box>
@@ -96,10 +88,6 @@ export const PidTuning = () => {
                 getSliderChangeHandler(value, SliderHandlerTypes.D_slider)
                   .ChangeHangler
               }
-              // onChangeCommitted={
-              //   getSliderChangeHandler(SliderHandlerTypes.D_slider)
-              //     .ChangeCommitHandler
-              // }
             />
           </Box>
           <Button variant="outlined" onClick={handleResetSliders(value)}>

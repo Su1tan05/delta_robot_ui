@@ -6,9 +6,18 @@ type MotorMonitoringDTO = {
   y: number;
   z: number;
 };
-const motor1CircleArray = new CircleArray<MotorMonitoringDTO>(10);
-const motor2CircleArray = new CircleArray<MotorMonitoringDTO>(10);
-const motor3CircleArray = new CircleArray<MotorMonitoringDTO>(10);
+
+
+type MotorMonitoringDTONEW = {
+  x: number;
+  y: number;
+  z: number;
+  pwm: number;
+};
+
+const motor1CircleArray = new CircleArray<MotorMonitoringDTO>(50);
+const motor2CircleArray = new CircleArray<MotorMonitoringDTO>(50);
+const motor3CircleArray = new CircleArray<MotorMonitoringDTONEW>(50);
 
 export const useLogic = () => {
   const initialTheta1 = useAppSelector(
@@ -31,6 +40,10 @@ export const useLogic = () => {
     (state) => state.motorinfo.realTheta3
   );
 
+  const motor3PWM = useAppSelector(
+    (state) => state.motorinfo.pwm3
+  );
+
   const time = useAppSelector((state) => state.motorinfo.time);
 
   motor1CircleArray.add({
@@ -49,6 +62,7 @@ export const useLogic = () => {
     x: initialTheta3,
     y: realTheta3,
     z: time,
+    pwm: motor3PWM
   });
 
   const viewMotor1Data = {
@@ -67,6 +81,7 @@ export const useLogic = () => {
     specifiedAngle: motor3CircleArray.state.map((item) => item.x),
     realAngle: motor3CircleArray.state.map((item) => item.y),
     time: motor3CircleArray.state.map((item) => item.z),
+    pwm: motor3CircleArray.state.map((item)=> item.pwm)
   };
 
   return {
@@ -77,6 +92,7 @@ export const useLogic = () => {
       realTheta2,
       initialTheta3,
       realTheta3,
+      motor3PWM
     },
     viewMotor1Data,
     viewMotor2Data,

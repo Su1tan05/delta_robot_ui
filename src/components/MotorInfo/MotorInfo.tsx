@@ -25,12 +25,12 @@ export const MotorInfo = () => {
                 {
                   data: viewMotor1Data.specifiedAngle,
                   label: 'Заданый угол',
-                  showMark: ({ index }) => index === 0,
+                  showMark: false
                 },
                 {
                   data: viewMotor1Data.realAngle,
                   label: 'Значение угла с энкодера',
-                  showMark: ({ index }) => index === 0,
+                  showMark: false
                 },
               ]}
               skipAnimation = {true}
@@ -52,12 +52,12 @@ export const MotorInfo = () => {
                 {
                   data: viewMotor2Data.specifiedAngle,
                   label: 'Заданый угол',
-                  showMark: ({ index }) => index === 0
+                  showMark: false
                 },
                 {
                   data: viewMotor2Data.realAngle,
                   label: 'Значение угла с энкодера',
-                  showMark: ({ index }) => index === 0
+                  showMark: false
                 },
               ]}
               skipAnimation = {true}
@@ -79,12 +79,34 @@ export const MotorInfo = () => {
                 {
                   data: viewMotor3Data.specifiedAngle,
                   label: 'Заданый угол',
-                  showMark: ({ index }) => index === 0
+                  showMark: false
                 },
                 {
                   data: viewMotor3Data.realAngle,
                   label: 'Значение угла с энкодера',
-                  showMark: ({ index }) => index === 0
+                  showMark: false
+                },
+              ]}
+              height={300}
+              margin={{ left: 30, right: 30, top: 15, bottom: 30 }}
+              grid={{ vertical: true, horizontal: true }}
+              skipAnimation = {true}
+            />
+          </ChartContainer>
+        </Grid>
+        <Grid item xs={12}>
+          <ChartContainer>
+            <Typography variant="body1" component="span" textAlign="center">
+              Motor3 PWM (real): {motorData.motor3PWM}
+            </Typography>
+            <LineChart
+              xAxis={[{ data: viewMotor3Data.time }]}
+              yAxis={[{ min: -1, max: 1 }]}
+              series={[
+                {
+                  data: viewMotor3Data.pwm,
+                  label: 'PWM',
+                  showMark: false
                 },
               ]}
               height={300}
