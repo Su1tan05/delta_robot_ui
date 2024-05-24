@@ -1,13 +1,21 @@
 import { useState, ChangeEvent } from "react";
 import { parseFile } from "../../../utils/FileParsingUtils";
-import { useAppDispatch } from "../../../redux";
-import { setTrajectoryPoints } from "../../../redux/features/motorInfo/uploadFileSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux";
+import {
+  resetTrajectoryPoints,
+  setTrajectoryPoints,
+} from "../../../redux/features/motorInfo/uploadFileSlice";
 import { TrajectoryPointsModel } from "../../../models/TrajectoryPointsModel";
+import {
+  resetAttachedFile,
+  setAttachedFileName,
+} from "../../../redux/features/motorInfo/appDataSlice";
 
 export const useLogic = () => {
   const dispatch = useAppDispatch();
 
   const [file, setFile] = useState<File | null>(null);
+  const fileName = useAppSelector((state) => state.appData.attachedFileName);
 
   const handleAttachFile = async (e: ChangeEvent<HTMLInputElement>) => {
     const attachedFile = e.target.files?.[0];
@@ -17,11 +25,14 @@ export const useLogic = () => {
     }
 
     const json = await parseFile<TrajectoryPointsModel>(attachedFile);
-    dispatch(setTrajectoryPoints(json))
+    dispatch(setTrajectoryPoints(json));
     setFile(attachedFile);
+    dispatch(setAttachedFileName(attachedFile?.name));
   };
 
   const handleDetachFile = () => {
+    dispatch(resetAttachedFile());
+    dispatch(resetTrajectoryPoints());
     setFile(null);
   };
 
@@ -30,9 +41,7 @@ export const useLogic = () => {
     console.log(file);
   };
 
-  const fileName = file?.name;
-
-  const hasAttachedFile = Boolean(file !== null);
+  const hasAttachedFile = Boolean(fileName !== undefined);
 
   return {
     handleAttachFile,
