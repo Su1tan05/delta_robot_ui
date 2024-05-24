@@ -7,10 +7,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useState } from "react";
 import { Container } from "./styles";
+import { useLogic } from "./useLogic";
 
 export const ActionButtons = () => {
   const [selected, setSelected] = useState(false);
 
+  const {handleResetAll} = useLogic();
+  
   return (
     <Container>
     <Grid container spacing={2}>
@@ -49,7 +52,7 @@ export const ActionButtons = () => {
           </Button>
         </Tooltip>
         <Tooltip title="Reset all">
-          <Button>
+          <Button onClick={handleResetAll}>
             <RestartAltIcon />
           </Button>
         </Tooltip>

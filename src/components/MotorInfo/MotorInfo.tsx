@@ -7,8 +7,13 @@ import { TabPanel } from "../TabPanel";
 import { Plot3D } from "../Plot3D";
 
 export const MotorInfo = () => {
-  const { motorData, viewMotor1Data, viewMotor2Data, viewMotor3Data } =
-    useLogic();
+  const {
+    motorData,
+    viewMotor1Data,
+    viewMotor2Data,
+    viewMotor3Data,
+    viewPositionData,
+  } = useLogic();
 
   const [value, setValue] = useState(0);
 
@@ -35,8 +40,16 @@ export const MotorInfo = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <ChartContainer>
-              <Typography variant="body1" component="span" textAlign="center">
-                Motor1 angle (real): {motorData.realTheta1}
+              <Typography
+                variant="subtitle1"
+                component="span"
+                textAlign="center"
+              >
+                &#x398;1 (real): {motorData.realTheta1} PWM:{" "}
+                {motorData.motor1PWM}
+                <span style={{ float: "right" }}>
+                  X: {motorData.x} Y: {motorData.y} Z: {motorData.z}
+                </span>
               </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor1Data.time }]}
@@ -44,12 +57,12 @@ export const MotorInfo = () => {
                 series={[
                   {
                     data: viewMotor1Data.specifiedAngle,
-                    label: "Заданый угол",
+                    label: "Заданый угол (М1)",
                     showMark: false,
                   },
                   {
                     data: viewMotor1Data.realAngle,
-                    label: "Значение угла с энкодера",
+                    label: "Значение угла с энкодера (М1)",
                     showMark: false,
                   },
                 ]}
@@ -57,13 +70,22 @@ export const MotorInfo = () => {
                 height={300}
                 margin={{ left: 30, right: 30, top: 15, bottom: 30 }}
                 grid={{ vertical: true, horizontal: true }}
+                title="fefef"
               />
             </ChartContainer>
           </Grid>
           <Grid item xs={12}>
             <ChartContainer>
-              <Typography variant="body1" component="span" textAlign="center">
-                Motor2 angle (real): {motorData.realTheta2}
+              <Typography
+                variant="subtitle1"
+                component="span"
+                textAlign="center"
+              >
+                &#x398;1 (real): {motorData.realTheta2} PWM:{" "}
+                {motorData.motor2PWM}
+                <span style={{ float: "right" }}>
+                  X: {motorData.x} Y: {motorData.y} Z: {motorData.z}
+                </span>
               </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor2Data.time }]}
@@ -71,12 +93,12 @@ export const MotorInfo = () => {
                 series={[
                   {
                     data: viewMotor2Data.specifiedAngle,
-                    label: "Заданый угол",
+                    label: "Заданый угол (М2)",
                     showMark: false,
                   },
                   {
                     data: viewMotor2Data.realAngle,
-                    label: "Значение угла с энкодера",
+                    label: "Значение угла с энкодера (М2)",
                     showMark: false,
                   },
                 ]}
@@ -89,8 +111,16 @@ export const MotorInfo = () => {
           </Grid>
           <Grid item xs={12}>
             <ChartContainer>
-              <Typography variant="body1" component="span" textAlign="center">
-                Motor3 angle (real): {motorData.realTheta3}
+              <Typography
+                variant="subtitle1"
+                component="span"
+                textAlign="center"
+              >
+                &#x398;1 (real): {motorData.realTheta3} PWM:{" "}
+                {motorData.motor3PWM}
+                <span style={{ float: "right" }}>
+                  X: {motorData.x} Y: {motorData.y} Z: {motorData.z}
+                </span>
               </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
@@ -98,12 +128,12 @@ export const MotorInfo = () => {
                 series={[
                   {
                     data: viewMotor3Data.specifiedAngle,
-                    label: "Заданый угол",
+                    label: "Заданый угол (М3)",
                     showMark: false,
                   },
                   {
                     data: viewMotor3Data.realAngle,
-                    label: "Значение угла с энкодера",
+                    label: "Значение угла с энкодера (М3)",
                     showMark: false,
                   },
                 ]}
@@ -122,7 +152,7 @@ export const MotorInfo = () => {
           <Grid item xs={12}>
             <ChartContainer>
               <Typography variant="body1" component="span" textAlign="center">
-                Position X (real): {motorData.motor3PWM}
+                Position X (real): {motorData.x}
               </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
@@ -130,7 +160,12 @@ export const MotorInfo = () => {
                 series={[
                   {
                     data: viewMotor3Data.pwm,
-                    label: "PWM",
+                    label: "заданные значения X",
+                    showMark: false,
+                  },
+                  {
+                    data: viewMotor3Data.pwm,
+                    label: "реальные значения X",
                     showMark: false,
                   },
                 ]}
@@ -144,7 +179,7 @@ export const MotorInfo = () => {
           <Grid item xs={12}>
             <ChartContainer>
               <Typography variant="body1" component="span" textAlign="center">
-                Position Y (real): {motorData.motor3PWM}
+                Position Y (real): {motorData.y}
               </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
@@ -152,7 +187,12 @@ export const MotorInfo = () => {
                 series={[
                   {
                     data: viewMotor3Data.pwm,
-                    label: "PWM",
+                    label: "заданные значения Y",
+                    showMark: false,
+                  },
+                  {
+                    data: viewMotor3Data.pwm,
+                    label: "реальные значения Y",
                     showMark: false,
                   },
                 ]}
@@ -166,7 +206,7 @@ export const MotorInfo = () => {
           <Grid item xs={12}>
             <ChartContainer>
               <Typography variant="body1" component="span" textAlign="center">
-                Position Z (real): {motorData.motor3PWM}
+                Position Z (real): {motorData.z}
               </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
@@ -174,7 +214,12 @@ export const MotorInfo = () => {
                 series={[
                   {
                     data: viewMotor3Data.pwm,
-                    label: "PWM",
+                    label: "заданные значения Z",
+                    showMark: false,
+                  },
+                  {
+                    data: viewMotor3Data.pwm,
+                    label: "реальные значения Z",
                     showMark: false,
                   },
                 ]}
@@ -187,20 +232,18 @@ export const MotorInfo = () => {
           </Grid>
         </Grid>
       </TabPanel>
+
       <TabPanel value={value} index={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <ChartContainer>
-              <Typography variant="body1" component="span" textAlign="center">
-                Motor1 PWM (real): {motorData.motor3PWM}
-              </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
                 yAxis={[{ min: -1, max: 1 }]}
                 series={[
                   {
-                    data: viewMotor3Data.pwm,
-                    label: "PWM",
+                    data: viewMotor1Data.pwm,
+                    label: "PWM (M1)",
                     showMark: false,
                   },
                 ]}
@@ -213,16 +256,13 @@ export const MotorInfo = () => {
           </Grid>
           <Grid item xs={12}>
             <ChartContainer>
-              <Typography variant="body1" component="span" textAlign="center">
-                Motor2 PWM (real): {motorData.motor3PWM}
-              </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
                 yAxis={[{ min: -1, max: 1 }]}
                 series={[
                   {
-                    data: viewMotor3Data.pwm,
-                    label: "PWM",
+                    data: viewMotor2Data.pwm,
+                    label: "PWM (M2)",
                     showMark: false,
                   },
                 ]}
@@ -235,16 +275,13 @@ export const MotorInfo = () => {
           </Grid>
           <Grid item xs={12}>
             <ChartContainer>
-              <Typography variant="body1" component="span" textAlign="center">
-                Motor3 PWM (real): {motorData.motor3PWM}
-              </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
                 yAxis={[{ min: -1, max: 1 }]}
                 series={[
                   {
                     data: viewMotor3Data.pwm,
-                    label: "PWM",
+                    label: "PWM (M3)",
                     showMark: false,
                   },
                 ]}
