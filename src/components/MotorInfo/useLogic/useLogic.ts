@@ -7,7 +7,6 @@ type MotorMonitoringDTO = {
   z: number;
 };
 
-
 type MotorMonitoringDTONEW = {
   x: number;
   y: number;
