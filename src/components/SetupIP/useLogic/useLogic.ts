@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../redux";
 import { setWebsocketIP } from "../../../redux/features/motorInfo/appDataSlice";
+import { useRosContext } from "../../RosProvider";
 
 const WEBSOCKET_IP_KEY = "websocketIP";
 
 export const useLogic = () => {
   const [IPValue, setIPValue] = useState<string>("");
   const dispatch = useAppDispatch();
+  const ros = useRosContext();
+
 
   const handleChangeTextField = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -15,8 +18,14 @@ export const useLogic = () => {
   };
 
   const handelClickConnectButton = () => {
+    ros?.close();
     localStorage.setItem(WEBSOCKET_IP_KEY, IPValue);
     dispatch(setWebsocketIP(IPValue));
+    ros?.connect(IPValue)
+  };
+
+  const handelClickDisconnectButton = () => {
+    ros?.close();
   };
 
   useEffect(() => {
@@ -26,6 +35,7 @@ export const useLogic = () => {
   return {
     handelClickConnectButton,
     handleChangeTextField,
+    handelClickDisconnectButton,
     IPValue,
   };
 };

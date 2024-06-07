@@ -1,7 +1,6 @@
-import { ChangeEvent, ChangeEventHandler, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useRosContext } from "../../RosProvider";
 import ROSLIB from "roslib";
-import { set } from "lodash";
 
 export const useLogic = () => {
 

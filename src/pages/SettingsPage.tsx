@@ -36,7 +36,7 @@ export const SettingsPage = () => {
         </Grid>
         <Divider orientation="vertical" flexItem />
         <Grid item xs={6}>
-        <Typography variant="h4">Настройка подключения к WebSocket</Typography>
+        <Typography variant="h4">Настройка подключения к ROS</Typography>
         <SetupIP/>
         </Grid>
       </Grid>

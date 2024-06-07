@@ -9,13 +9,13 @@ import {
 import { useLogic } from "./useLogic";
 
 export const SetupIP = () => {
-  const { handelClickConnectButton, handleChangeTextField, IPValue } = useLogic();
+  const { handelClickConnectButton, handleChangeTextField, handelClickDisconnectButton, IPValue } = useLogic();
 
   return (
     <Container>
       <Grid container spacing={1} marginTop={5}>
-        <Grid item xs={1}>
-          <Typography variant="h5">IP</Typography>
+        <Grid item xs={1.6}>
+          <Typography variant="h6">URL(ws)</Typography>
         </Grid>
         <Grid item xs={6}>
           <Box gridAutoFlow={"column"} display={"grid"} columnGap={3}>
@@ -35,6 +35,11 @@ export const SetupIP = () => {
         <Button fullWidth variant="contained" onClick={handelClickConnectButton}>
           Подключиться
         </Button>
+        <Box marginTop={0.5}>
+        <Button fullWidth color={"error"} variant="contained" onClick={handelClickDisconnectButton}>
+          Отключиться
+        </Button>
+        </Box>
       </Box>
     </Container>
   );
