@@ -1,29 +1,76 @@
-import { GridRowId, GridRowModes, GridRowsProp } from "@mui/x-data-grid";
-import { useState } from "react";
-
-const initialRows: GridRowsProp = [
-  {
-    id: 1,
-    x: 0,
-    y: 0,
-    z: 0,
-    ecdEffectorStatus: "enabled",
-  },
-];
+import { LiteralUnion, MRT_Row, MRT_TableInstance } from "material-react-table";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../redux";
+import { TrajectoryPoint } from "../../../models/TrajectoryPointsModel";
+import {
+  addTrajectoryPoint,
+  editTrajectoryPoint,
+  removeDataByIndex,
+} from "../../../redux/features/motorInfo/uploadFileSlice";
 
 export const useLogic = () => {
-    const [id, setId] = useState();
-    const [rows, setRows] = useState(initialRows);
+  const [data, setData] = useState<TableTrajectoryData[]>([]);
 
+  const dispatch = useAppDispatch();
 
-    const handleClickAddRecordButton = () => {
-        const id = 2;
-        setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
-      };
+  const trajectoryPoints = useAppSelector(
+    (state) => state.trajectoryInfo.trajectoryPoints
+  );
 
-    const handleDeleteClick = (id: GridRowId) => () => {
-        setRows(rows.filter((row) => row.id !== id));
-    };    
+  const handleDeleteRow = (row: MRT_Row<TableTrajectoryData>) => {
+    dispatch(removeDataByIndex(row.index));
+  };
 
-    return {rows}
+  const handleAddNewData = (table: MRT_TableInstance<TableTrajectoryData>) => {
+    table.setCreatingRow(true);
+  };
+
+  const handleEditingRowSave = (
+    row: MRT_Row<TableTrajectoryData>,
+    table: MRT_TableInstance<TableTrajectoryData>,
+    values: Record<LiteralUnion<"X" | "Y" | "Z">, any>
+  ) => {
+    const trajectroryPoint: TrajectoryPoint = [values.X, values.Y, values.Z];
+    dispatch(editTrajectoryPoint({ index: row.index, point: trajectroryPoint }));
+    table.setEditingRow(null);
+  };
+
+  const handleCreatingRowSave = (
+    table: MRT_TableInstance<TableTrajectoryData>,
+    values: Record<LiteralUnion<"X" | "Y" | "Z">, any>
+  ) => {
+    const trajectroryPoint: TrajectoryPoint = [values.X, values.Y, values.Z];
+    dispatch(addTrajectoryPoint(trajectroryPoint));
+    table.setCreatingRow(null);
+  };
+
+  const fillTableData = (trajectoryPoints: TrajectoryPoint[]) => {
+    var tableData: TableTrajectoryData[] = [];
+
+    for (var i = 0; i <= trajectoryPoints.length; i++) {
+      const point = trajectoryPoints[i];
+      if (point !== undefined) {
+        const tablePoint: TableTrajectoryData = {
+          X: point[0],
+          Y: point[1],
+          Z: point[2],
+        };
+        tableData.push(tablePoint);
+      }
+    }
+
+    setData(tableData);
+  };
+
+  useEffect(() => {
+    fillTableData(trajectoryPoints);
+  }, [trajectoryPoints]);
+
+  return {
+    data,
+    handleAddNewData,
+    handleCreatingRowSave,
+    handleDeleteRow,
+    handleEditingRowSave,
+  };
 };

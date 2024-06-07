@@ -42,14 +42,14 @@ export const HomePage = () => {
           <SeparationContainer margin="0 30px 0 0">
             <MotorInfo />
           </SeparationContainer>
-          <SeparationContainer margin="10px 30px 0 0">
+          {/* <SeparationContainer margin="10px 30px 0 0">
             <Grid item xs={8}>
               <Plot3D />
             </Grid>
             <Grid item xs={4}>
               motor real time data
             </Grid>
-          </SeparationContainer>
+          </SeparationContainer> */}
         </Grid>
       </Grid>
     </MainContainer>
