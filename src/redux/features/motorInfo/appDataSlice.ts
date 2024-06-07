@@ -3,10 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface AppData {
     attachedFileName: string | undefined
+    websocketIP: string | undefined
 }
 
 const initialState: AppData = {
-  attachedFileName: undefined
+  attachedFileName: undefined,
+  websocketIP: undefined
 };
 
 export const appDataSlice = createSlice({
@@ -15,6 +17,13 @@ export const appDataSlice = createSlice({
   reducers: {
     resetAttachedFile: (state) => {
       state.attachedFileName = undefined
+    },
+
+    setWebsocketIP: (
+      state,
+      action: PayloadAction<string | undefined>
+    ) => {
+        state.websocketIP = action.payload;
     },
 
     setAttachedFileName: (
@@ -26,6 +35,6 @@ export const appDataSlice = createSlice({
   },
 });
 
-export const { setAttachedFileName, resetAttachedFile } = appDataSlice.actions;
+export const { setAttachedFileName, resetAttachedFile, setWebsocketIP } = appDataSlice.actions;
 
 export default appDataSlice.reducer;

@@ -26,7 +26,6 @@ export const PidTuning = () => {
       <Tabs
         value={value}
         onChange={handleChange}
-        aria-label="basic tabs example"
       >
         <Tab label="Мотор №1" />
         <Tab label="Мотор №2" />

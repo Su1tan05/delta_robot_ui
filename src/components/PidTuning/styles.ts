@@ -11,7 +11,7 @@ export const SliderContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 300px;
+  max-width: 400px;
 `;
 
 export const ButtonContainer = styled.div`
