@@ -11,7 +11,7 @@ type PositionMonitoringDTO = {
 
 type MotorMonitoringDTO = {
   setpoint: number;
-  theta: number
+  theta: number;
   pwm: number;
   time: number;
 };
@@ -23,75 +23,71 @@ const positionCircleArray = new CircleArray<PositionMonitoringDTO>(50);
 
 const chartXLimit: number = 30;
 
-
 export const useLogic = () => {
+  const isClear = false;
+  const [key, setKey] = useState(0);
 
   const initialTheta1 = useAppSelector(
     (state) => state.motorinfo.initialTheta1
   );
 
-  const x = useAppSelector(
-    (state) => state.motorinfo.x
-  );
+  const x = useAppSelector((state) => state.motorinfo.x);
 
-  const y = useAppSelector(
-    (state) => state.motorinfo.y
-  );
+  const y = useAppSelector((state) => state.motorinfo.y);
 
-  const z = useAppSelector(
-    (state) => state.motorinfo.z
-  );
+  const z = useAppSelector((state) => state.motorinfo.z);
 
-  const realTheta1 = useAppSelector(
-    (state) => state.motorinfo.realTheta1
-  );
+  const realTheta1 = useAppSelector((state) => state.motorinfo.realTheta1);
   const initialTheta2 = useAppSelector(
     (state) => state.motorinfo.initialTheta2
   );
-  const realTheta2 = useAppSelector(
-    (state) => state.motorinfo.realTheta2
-  );
+  const realTheta2 = useAppSelector((state) => state.motorinfo.realTheta2);
   const initialTheta3 = useAppSelector(
     (state) => state.motorinfo.initialTheta3
   );
-  const realTheta3 = useAppSelector(
-    (state) => state.motorinfo.realTheta3
-  );
+  const realTheta3 = useAppSelector((state) => state.motorinfo.realTheta3);
 
-  const motor1PWM = useAppSelector(
-    (state) => state.motorinfo.pwm1
-  );
+  const motor1PWM = useAppSelector((state) => state.motorinfo.pwm1);
 
-  const motor2PWM = useAppSelector(
-    (state) => state.motorinfo.pwm2
-  );
+  const motor2PWM = useAppSelector((state) => state.motorinfo.pwm2);
 
-  const motor3PWM = useAppSelector(
-    (state) => state.motorinfo.pwm3
-  );
+  const motor3PWM = useAppSelector((state) => state.motorinfo.pwm3);
 
   const time = useAppSelector((state) => state.motorinfo.time);
 
-  motor1CircleArray.add({
-    setpoint: initialTheta1,
-    theta: realTheta1,
-    time: time,
-    pwm: motor1PWM
-  });
+  useEffect(() => {
+    const timeNumber = Number(time);
 
-  motor2CircleArray.add({
-    setpoint: initialTheta2,
-    theta: realTheta2,
-    time: time,
-    pwm: motor2PWM
-  });
+    if (timeNumber > 500) {
+      setKey((prevKey) => prevKey + 1);
+      motor1CircleArray.clear();
+    }
+  }, [time]);
 
-  motor3CircleArray.add({
-    setpoint: initialTheta3,
-    theta: realTheta3,
-    time: time,
-    pwm: motor3PWM
-  });
+  if (isClear === false) {
+    motor1CircleArray.add({
+      setpoint: initialTheta1,
+      theta: realTheta1,
+      time: time,
+      pwm: motor1PWM,
+    });
+
+    motor2CircleArray.add({
+      setpoint: initialTheta2,
+      theta: realTheta2,
+      time: time,
+      pwm: motor2PWM,
+    });
+
+    motor3CircleArray.add({
+      setpoint: initialTheta3,
+      theta: realTheta3,
+      time: time,
+      pwm: motor3PWM,
+    });
+
+  }
+
 
   const viewMotor1Data = {
     specifiedAngle: motor1CircleArray.state.map((item) => item.setpoint),
@@ -119,7 +115,7 @@ export const useLogic = () => {
     y: positionCircleArray.state.map((item) => item.y),
     z: positionCircleArray.state.map((item) => item.z),
     time: positionCircleArray.state.map((item) => item.time),
-  }
+  };
 
   return {
     motorData: {
@@ -134,11 +130,12 @@ export const useLogic = () => {
       motor3PWM,
       x,
       y,
-      z
+      z,
     },
     viewMotor1Data,
     viewMotor2Data,
     viewMotor3Data,
-    viewPositionData
+    viewPositionData,
+    key,
   };
 };

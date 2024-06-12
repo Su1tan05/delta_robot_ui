@@ -28,6 +28,8 @@ export const useLogic = () => {
     dispatch(setTrajectoryPoints(json));
     setFile(attachedFile);
     dispatch(setAttachedFileName(attachedFile?.name));
+
+    e.target.value = '';
   };
 
   const handleDetachFile = () => {

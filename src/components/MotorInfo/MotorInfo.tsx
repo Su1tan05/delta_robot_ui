@@ -13,6 +13,7 @@ export const MotorInfo = () => {
     viewMotor2Data,
     viewMotor3Data,
     viewPositionData,
+    key
   } = useLogic();
 
   const [value, setValue] = useState(0);
@@ -52,6 +53,7 @@ export const MotorInfo = () => {
                 </span>
               </Typography>
               <LineChart
+                key={key}
                 xAxis={[{ data: viewMotor1Data.time }]}
                 yAxis={[{ min: -150, max: 150 }]}
                 series={[
@@ -210,7 +212,7 @@ export const MotorInfo = () => {
               </Typography>
               <LineChart
                 xAxis={[{ data: viewMotor3Data.time }]}
-                yAxis={[{ min: -1, max: 1 }]}
+                yAxis={[{ min: -400, max: -200 }]}
                 series={[
                   {
                     data: viewMotor3Data.pwm,

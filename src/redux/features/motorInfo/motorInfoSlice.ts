@@ -15,6 +15,12 @@ export interface MotorInfoState {
   pwm2: number;
   pwm3: number;
   time: number;
+
+  
+  calculatedTheta1: number[]
+  calculatedTheta2: number[]
+  calculatedTheta3: number[]
+  calculatedTime: number[]
 }
 
 const initialState: MotorInfoState = {
@@ -31,6 +37,21 @@ const initialState: MotorInfoState = {
   pwm2: 0,
   pwm3: 0,
   time: 0,
+  calculatedTheta1: [],
+  calculatedTheta2: [],
+  calculatedTheta3: [],
+  calculatedTime: [],
+};
+
+const parseDataString = (dataString: string): number[][] => {
+  // Remove the outer double quotes and split the string into an array of strings
+  const arrayStrings = dataString.slice(1, -1).split('], [');
+
+  // Further process each array string to convert it into an array of numbers
+  return arrayStrings.map(arrayStr => {
+    // Remove any remaining brackets and whitespace, then split by comma
+    return arrayStr.replace(/[\[\]]/g, '').split(',').map(Number);
+  });
 };
 
 export const motorInfoSlice = createSlice({
@@ -47,6 +68,21 @@ export const motorInfoSlice = createSlice({
       state.pwm1 = 0;
       state.pwm2 = 0;
       state.pwm3 = 0;
+    },
+
+    setCalculatedTrajectoryData: (state, action: PayloadAction<string>) => {
+      const data = parseDataString(action.payload);
+
+      state.calculatedTheta1 = data[0];
+      state.calculatedTheta2 = data[1];
+      state.calculatedTheta3 = data[2];
+      state.calculatedTime = data[3];
+    },
+
+    setPositionData: (state, action: PayloadAction<number[]>) => {
+      state.x = action.payload[0] ?? state.x;
+      state.y = action.payload[1] ?? state.y;
+      state.z = action.payload[2] ?? state.z;
     },
 
     setData: (state, action: PayloadAction<number[]>) => {
@@ -70,6 +106,8 @@ export const motorInfoSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   setData,
+  setCalculatedTrajectoryData,
+  setPositionData
 } = motorInfoSlice.actions;
 
 export default motorInfoSlice.reducer;

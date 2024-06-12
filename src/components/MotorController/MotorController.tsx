@@ -9,9 +9,12 @@ export const MotorController = () => {
   const {
     handleResetSliders,
     getSliderChangeHandler,
-    slider1Value,
-    slider2Value,
-    slider3Value,
+    sliderXValue,
+    sliderYValue,
+    sliderZValue,
+    sliderM1Value,
+    sliderM2Value,
+    sliderM3Value,
   } = useLogic();
 
   const [value, setValue] = useState(0);
@@ -46,14 +49,14 @@ export const MotorController = () => {
                 aria-label="Small"
                 max={100}
                 min={-100}
-                value={slider1Value ?? 0}
+                value={sliderXValue ?? 0}
                 valueLabelDisplay="auto"
                 onChange={
-                  getSliderChangeHandler(SliderHandlerTypes.Motor1_slider)
+                  getSliderChangeHandler(SliderHandlerTypes.PostionX_slider)
                     .ChangeHangler
                 }
                 onChangeCommitted={
-                  getSliderChangeHandler(SliderHandlerTypes.Motor1_slider)
+                  getSliderChangeHandler(SliderHandlerTypes.PostionX_slider)
                     .ChangeCommitHandler
                 }
               />
@@ -69,14 +72,14 @@ export const MotorController = () => {
                 style={{ width: "100%" }}
                 max={100}
                 min={-100}
-                value={slider2Value ?? 0}
+                value={sliderYValue ?? 0}
                 valueLabelDisplay="auto"
                 onChange={
-                  getSliderChangeHandler(SliderHandlerTypes.Motor2_slider)
+                  getSliderChangeHandler(SliderHandlerTypes.PostionY_slider)
                     .ChangeHangler
                 }
                 onChangeCommitted={
-                  getSliderChangeHandler(SliderHandlerTypes.Motor2_slider)
+                  getSliderChangeHandler(SliderHandlerTypes.PostionY_slider)
                     .ChangeCommitHandler
                 }
               />
@@ -87,19 +90,19 @@ export const MotorController = () => {
               </Typography>
               <Slider
                 size="small"
-                defaultValue={0}
+                defaultValue={-260}
                 aria-label="Small"
                 style={{ width: "100%" }}
-                max={100}
-                min={-100}
-                value={slider3Value ?? 0}
+                max={-200}
+                min={-400}
+                value={sliderZValue ?? 0}
                 valueLabelDisplay="auto"
                 onChange={
-                  getSliderChangeHandler(SliderHandlerTypes.Motor3_slider)
+                  getSliderChangeHandler(SliderHandlerTypes.PostionZ_slider)
                     .ChangeHangler
                 }
                 onChangeCommitted={
-                  getSliderChangeHandler(SliderHandlerTypes.Motor3_slider)
+                  getSliderChangeHandler(SliderHandlerTypes.PostionZ_slider)
                     .ChangeCommitHandler
                 }
               />
@@ -119,7 +122,7 @@ export const MotorController = () => {
                 style={{ width: "100%" }}
                 max={100}
                 min={-100}
-                value={slider1Value ?? 0}
+                value={sliderM1Value ?? 0}
                 valueLabelDisplay="auto"
                 onChange={
                   getSliderChangeHandler(SliderHandlerTypes.Motor1_slider)
@@ -142,7 +145,7 @@ export const MotorController = () => {
                 style={{ width: "100%" }}
                 max={100}
                 min={-100}
-                value={slider2Value ?? 0}
+                value={sliderM2Value ?? 0}
                 valueLabelDisplay="auto"
                 onChange={
                   getSliderChangeHandler(SliderHandlerTypes.Motor2_slider)
@@ -165,7 +168,7 @@ export const MotorController = () => {
                 style={{ width: "100%" }}
                 max={100}
                 min={-100}
-                value={slider3Value ?? 0}
+                value={sliderM3Value ?? 0}
                 valueLabelDisplay="auto"
                 onChange={
                   getSliderChangeHandler(SliderHandlerTypes.Motor3_slider)

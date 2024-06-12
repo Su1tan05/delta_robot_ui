@@ -4,11 +4,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface AppData {
     attachedFileName: string | undefined
     websocketIP: string | undefined
+    isErrorAlectOpen: boolean
 }
 
 const initialState: AppData = {
   attachedFileName: undefined,
-  websocketIP: undefined
+  websocketIP: undefined,
+  isErrorAlectOpen: false
 };
 
 export const appDataSlice = createSlice({
@@ -17,6 +19,13 @@ export const appDataSlice = createSlice({
   reducers: {
     resetAttachedFile: (state) => {
       state.attachedFileName = undefined
+    },
+
+    setOpenErrorAlert: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+        state.isErrorAlectOpen = action.payload;
     },
 
     setWebsocketIP: (
@@ -35,6 +44,6 @@ export const appDataSlice = createSlice({
   },
 });
 
-export const { setAttachedFileName, resetAttachedFile, setWebsocketIP } = appDataSlice.actions;
+export const { setAttachedFileName, resetAttachedFile, setWebsocketIP, setOpenErrorAlert } = appDataSlice.actions;
 
 export default appDataSlice.reducer;

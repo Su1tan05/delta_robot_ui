@@ -1,15 +1,17 @@
 import {
+  Alert,
   Box,
   Button,
   Container,
   Grid,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
 import { useLogic } from "./useLogic";
 
 export const SetupIP = () => {
-  const { handelClickConnectButton, handleChangeTextField, handelClickDisconnectButton, IPValue } = useLogic();
+  const { handelClickConnectButton, handleChangeTextField, handelClickDisconnectButton, IPValue, isErrorAlectOpen, handleCloseAlert } = useLogic();
 
   return (
     <Container>
@@ -41,6 +43,16 @@ export const SetupIP = () => {
         </Button>
         </Box>
       </Box>
+      <Snackbar open={isErrorAlectOpen} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert
+          onClose={handleCloseAlert}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          Ошибка подключения к WebSocket
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

@@ -5,6 +5,14 @@ import ROSLIB from "roslib";
 export const useRosTopics = () => {
   const ros = useRosContext();
 
+  const setPositionTopic = useRef(
+    new ROSLIB.Topic({
+      ros: ros!,
+      name: "/set_position",
+      messageType: "std_msgs/Float32MultiArray",
+    })
+  );
+
   const stopMotor1Topic = useRef(
     new ROSLIB.Topic({
       ros: ros!,
@@ -60,5 +68,6 @@ export const useRosTopics = () => {
     setMotor1AngleTopic: setMotor1AngleTopic.current,
     setMotor2AngleTopic: setMotor2AngleTopic.current,
     setMotor3AngleTopic: setMotor3AngleTopic.current,
+    setPositionTopic: setPositionTopic.current
   };
 };

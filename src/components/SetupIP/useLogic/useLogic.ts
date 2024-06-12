@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../../redux";
-import { setWebsocketIP } from "../../../redux/features/motorInfo/appDataSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux";
+import {
+  setOpenErrorAlert,
+  setWebsocketIP,
+} from "../../../redux/features/motorInfo/appDataSlice";
 import { useRosContext } from "../../RosProvider";
 
 const WEBSOCKET_IP_KEY = "websocketIP";
@@ -10,6 +13,9 @@ export const useLogic = () => {
   const dispatch = useAppDispatch();
   const ros = useRosContext();
 
+  const isErrorAlectOpen = useAppSelector(
+    (state) => state.appData.isErrorAlectOpen
+  );
 
   const handleChangeTextField = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -21,7 +27,7 @@ export const useLogic = () => {
     ros?.close();
     localStorage.setItem(WEBSOCKET_IP_KEY, IPValue);
     dispatch(setWebsocketIP(IPValue));
-    ros?.connect(IPValue)
+    ros?.connect(IPValue);
   };
 
   const handelClickDisconnectButton = () => {
@@ -32,10 +38,22 @@ export const useLogic = () => {
     setIPValue(localStorage.getItem(WEBSOCKET_IP_KEY) ?? "");
   }, []);
 
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch(setOpenErrorAlert(false));
+  };
+
   return {
     handelClickConnectButton,
     handleChangeTextField,
     handelClickDisconnectButton,
+    isErrorAlectOpen,
+    handleCloseAlert,
     IPValue,
   };
 };
