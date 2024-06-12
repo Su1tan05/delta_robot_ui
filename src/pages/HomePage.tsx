@@ -13,14 +13,17 @@ import {
   SeparationContainer,
 } from "./styles";
 import Divider from "@mui/material/Divider";
-import { useAppSelector } from "../redux";
+import { useAppDispatch, useAppSelector } from "../redux";
 import { useRef } from "react";
 import ROSLIB from "roslib";
+import { setClearPlots } from "../redux/features/motorInfo/appDataSlice";
 
 export const HomePage = () => {
   const ros = useRosContext();
 
   const trajectoryInfo = useAppSelector((state) => state.trajectoryInfo);
+
+  const dispatch = useAppDispatch();
 
   const setMotor2AngleTopic = useRef(
     new ROSLIB.Topic({
@@ -31,9 +34,12 @@ export const HomePage = () => {
   ).current;
 
   const handleClickPlotTrajectoryButton = () => {
-    setMotor2AngleTopic.publish(
-      new ROSLIB.Message({ data: JSON.stringify(trajectoryInfo)})
-    );
+    if(trajectoryInfo.trajectoryPoints.length > 1) {
+      setMotor2AngleTopic.publish(
+        new ROSLIB.Message({ data: JSON.stringify(trajectoryInfo) })
+      );
+      dispatch(setClearPlots(true));
+    }
   };
 
   return (

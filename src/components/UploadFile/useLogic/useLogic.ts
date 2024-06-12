@@ -10,6 +10,7 @@ import {
   resetAttachedFile,
   setAttachedFileName,
 } from "../../../redux/features/motorInfo/appDataSlice";
+import { resetCalculatedTrajectory } from "../../../redux/features/motorInfo/motorInfoSlice";
 
 export const useLogic = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ export const useLogic = () => {
   const handleDetachFile = () => {
     dispatch(resetAttachedFile());
     dispatch(resetTrajectoryPoints());
+    dispatch(resetCalculatedTrajectory())
     setFile(null);
   };
 

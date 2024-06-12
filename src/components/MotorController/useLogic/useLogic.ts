@@ -35,6 +35,10 @@ export const useLogic = () => {
     setSliderM1Value(0);
     setSliderM2Value(0);
     setSliderM3Value(0);
+    setMotor1AngleTopic.publish(new ROSLIB.Message({ data: 0 }));
+    setMotor2AngleTopic.publish(new ROSLIB.Message({ data: 0 }));
+    setMotor3AngleTopic.publish(new ROSLIB.Message({ data: 0 }));
+
     // stopMotor1Topic.publish(new ROSLIB.Message({}));
     // stopMotor2Topic.publish(new ROSLIB.Message({}));
     // stopMotor3Topic.publish(new ROSLIB.Message({}));

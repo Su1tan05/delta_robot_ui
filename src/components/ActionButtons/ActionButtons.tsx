@@ -10,9 +10,8 @@ import { Container } from "./styles";
 import { useLogic } from "./useLogic";
 
 export const ActionButtons = () => {
-  const [selected, setSelected] = useState(false);
 
-  const {handleResetAll, handleStartButton} = useLogic();
+  const {handleResetAll, handleStartButton, selectedRealTimeProt, setSelectedRealTimeProt} = useLogic();
   
   return (
     <Container>
@@ -38,9 +37,9 @@ export const ActionButtons = () => {
         <Tooltip title="enable real time plot">
           <ToggleButton
             value="check"
-            selected={selected}
+            selected={selectedRealTimeProt}
             onChange={() => {
-              setSelected(!selected);
+              setSelectedRealTimeProt(!selectedRealTimeProt);
             }}
           >
             <TimelineIcon />

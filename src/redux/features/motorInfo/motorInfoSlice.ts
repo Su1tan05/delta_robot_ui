@@ -70,6 +70,13 @@ export const motorInfoSlice = createSlice({
       state.pwm3 = 0;
     },
 
+    resetCalculatedTrajectory: (state) => {
+      state.calculatedTheta1 = []
+      state.calculatedTheta2 = []
+      state.calculatedTheta3 = [];
+      state.calculatedTime = [];
+    },
+
     setCalculatedTrajectoryData: (state, action: PayloadAction<string>) => {
       const data = parseDataString(action.payload);
 
@@ -107,7 +114,8 @@ export const motorInfoSlice = createSlice({
 export const {
   setData,
   setCalculatedTrajectoryData,
-  setPositionData
+  setPositionData,
+  resetCalculatedTrajectory
 } = motorInfoSlice.actions;
 
 export default motorInfoSlice.reducer;

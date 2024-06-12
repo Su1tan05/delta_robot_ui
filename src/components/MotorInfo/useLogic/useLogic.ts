@@ -31,6 +31,13 @@ export const useLogic = () => {
     (state) => state.motorinfo.initialTheta1
   );
 
+  const calculatedTheta1 = useAppSelector((state) => state.motorinfo.calculatedTheta1);
+  const calculatedTheta2 = useAppSelector((state) => state.motorinfo.calculatedTheta2);
+  const calculatedTheta3 = useAppSelector((state) => state.motorinfo.calculatedTheta3);
+  const calculatedTime= useAppSelector((state) => state.motorinfo.calculatedTime);
+
+  const clearPlots = useAppSelector((state) => state.appData.clearPlots);
+
   const x = useAppSelector((state) => state.motorinfo.x);
 
   const y = useAppSelector((state) => state.motorinfo.y);
@@ -64,7 +71,7 @@ export const useLogic = () => {
     }
   }, [time]);
 
-  if (isClear === false) {
+  if (clearPlots === false) {
     motor1CircleArray.add({
       setpoint: initialTheta1,
       theta: realTheta1,
@@ -86,8 +93,18 @@ export const useLogic = () => {
       pwm: motor3PWM,
     });
 
+    positionCircleArray.add({
+      x: x,
+      y: y,
+      z: z,
+      time: time,
+    });
   }
-
+  else if (clearPlots === true) {
+    motor1CircleArray.clear()
+    motor2CircleArray.clear()
+    motor3CircleArray.clear()
+  }
 
   const viewMotor1Data = {
     specifiedAngle: motor1CircleArray.state.map((item) => item.setpoint),
@@ -118,8 +135,8 @@ export const useLogic = () => {
   };
 
   const round = (value: number) => {
-    return Math.round(value * 1000) / 1000
-  }
+    return Math.round(value * 1000) / 1000;
+  };
 
   return {
     motorData: {
@@ -141,5 +158,9 @@ export const useLogic = () => {
     viewMotor3Data,
     viewPositionData,
     key,
+    calculatedTheta1,
+    calculatedTheta2,
+    calculatedTheta3,
+    calculatedTime
   };
 };

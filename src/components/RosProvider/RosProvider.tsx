@@ -15,6 +15,10 @@ type RosProviderProps = {
 export const RosProvider = ({ children }: RosProviderProps) => {
   const websocketIP = useAppSelector((state) => state.appData.websocketIP);
 
+  const isRealTimePlotEnabled = useAppSelector(
+    (state) => state.appData.isRealTimePlotEnabled
+  );
+
   const dispatch = useAppDispatch();
 
   const [ros] = useState<ROSLIB.Ros>(new ROSLIB.Ros({}));
@@ -46,22 +50,23 @@ export const RosProvider = ({ children }: RosProviderProps) => {
   useEffect(() => {
     ros.on("error", (_e) => dispatch(setOpenErrorAlert(true)));
 
-    motorMonitoringSub.subscribe((message: any) => {
-      dispatch(setData(message.data));
-    });
+    if (isRealTimePlotEnabled === true) {
+      motorMonitoringSub.subscribe((message: any) => {
+        dispatch(setData(message.data));
+      });
 
-    robotPositionSub.subscribe((message: any) => {
-      dispatch(setPositionData(message.data));
-    });
+      robotPositionSub.subscribe((message: any) => {
+        dispatch(setPositionData(message.data));
+      });
 
-    calculatedTrajectorySub.subscribe((message: any) => {
-      dispatch(setCalculatedTrajectoryData(message.data));
-    });
-
-    return () => {
+      calculatedTrajectorySub.subscribe((message: any) => {
+        dispatch(setCalculatedTrajectoryData(message.data));
+      });
+    } else if (isRealTimePlotEnabled === false) {
       motorMonitoringSub.unsubscribe();
-    };
-  }, [ros]);
-
+      robotPositionSub.unadvertise();
+      calculatedTrajectorySub.unadvertise();
+    }
+  }, [ros, isRealTimePlotEnabled]);
   return <rosContext.Provider value={ros}>{children}</rosContext.Provider>;
 };

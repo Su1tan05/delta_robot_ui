@@ -1,6 +1,9 @@
 import ROSLIB from "roslib";
 import { useRosTopics } from "./useRosTopics";
-import { useAppSelector } from "../../../redux";
+import { useAppDispatch, useAppSelector } from "../../../redux";
+import { useState } from "react";
+import { setClearPlots, setRealTimePlotStatus } from "../../../redux/features/motorInfo/appDataSlice";
+import { resetCalculatedTrajectory, setCalculatedTrajectoryData } from "../../../redux/features/motorInfo/motorInfoSlice";
 
 export const useLogic = () => {
   const {
@@ -9,6 +12,22 @@ export const useLogic = () => {
     setMotor2AngleTopic,
     setMotor3AngleTopic,
   } = useRosTopics();
+
+  const [selectedRealTimeProt, setSelectedRealTimeProt] = useState(true);
+
+
+  const dispatch = useAppDispatch();
+  const isRealTimePlotEnabled = useAppSelector(
+    state => state.appData.isRealTimePlotEnabled
+  )
+
+  if(selectedRealTimeProt == true) {
+    dispatch(setRealTimePlotStatus(true))
+  }
+  else if(selectedRealTimeProt == false) {
+    dispatch(setRealTimePlotStatus(false))
+  }
+
   const delay = 120;
 
   const calculatedTheta1 = useAppSelector(
@@ -55,6 +74,8 @@ export const useLogic = () => {
   // Начало отправки данных
 
   const handleStartButton = () => {
+    dispatch(setClearPlots(false))
+    dispatch(resetCalculatedTrajectory())
     sendAllData()
     .then(() => {
       console.log("Все данные отправлены");
@@ -66,6 +87,8 @@ export const useLogic = () => {
 
   return {
     handleResetAll,
-    handleStartButton
+    handleStartButton,
+    selectedRealTimeProt,
+    setSelectedRealTimeProt
   };
 };

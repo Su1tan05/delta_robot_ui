@@ -2,15 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface AppData {
-    attachedFileName: string | undefined
-    websocketIP: string | undefined
-    isErrorAlectOpen: boolean
+  attachedFileName: string | undefined;
+  websocketIP: string | undefined;
+  isErrorAlectOpen: boolean;
+  isRealTimePlotEnabled: boolean;
+  clearPlots: boolean;
 }
 
 const initialState: AppData = {
   attachedFileName: undefined,
   websocketIP: undefined,
-  isErrorAlectOpen: false
+  isErrorAlectOpen: false,
+  isRealTimePlotEnabled: true,
+  clearPlots: false,
 };
 
 export const appDataSlice = createSlice({
@@ -18,32 +22,38 @@ export const appDataSlice = createSlice({
   initialState,
   reducers: {
     resetAttachedFile: (state) => {
-      state.attachedFileName = undefined
+      state.attachedFileName = undefined;
     },
 
-    setOpenErrorAlert: (
-      state,
-      action: PayloadAction<boolean>
-    ) => {
-        state.isErrorAlectOpen = action.payload;
+    setRealTimePlotStatus: (state, action: PayloadAction<boolean>) => {
+      state.isRealTimePlotEnabled = action.payload;
     },
 
-    setWebsocketIP: (
-      state,
-      action: PayloadAction<string | undefined>
-    ) => {
-        state.websocketIP = action.payload;
+    setClearPlots: (state, action: PayloadAction<boolean>) => {
+      state.clearPlots = action.payload;
     },
 
-    setAttachedFileName: (
-      state,
-      action: PayloadAction<string | undefined>
-    ) => {
-        state.attachedFileName = action.payload;
+    setOpenErrorAlert: (state, action: PayloadAction<boolean>) => {
+      state.isErrorAlectOpen = action.payload;
+    },
+
+    setWebsocketIP: (state, action: PayloadAction<string | undefined>) => {
+      state.websocketIP = action.payload;
+    },
+
+    setAttachedFileName: (state, action: PayloadAction<string | undefined>) => {
+      state.attachedFileName = action.payload;
     },
   },
 });
 
-export const { setAttachedFileName, resetAttachedFile, setWebsocketIP, setOpenErrorAlert } = appDataSlice.actions;
+export const {
+  setAttachedFileName,
+  resetAttachedFile,
+  setWebsocketIP,
+  setOpenErrorAlert,
+  setRealTimePlotStatus,
+  setClearPlots,
+} = appDataSlice.actions;
 
 export default appDataSlice.reducer;

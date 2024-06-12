@@ -13,7 +13,11 @@ export const MotorInfo = () => {
     viewMotor2Data,
     viewMotor3Data,
     viewPositionData,
-    key
+    key,
+    calculatedTheta1,
+    calculatedTheta2,
+    calculatedTheta3,
+    calculatedTime
   } = useLogic();
 
   const [value, setValue] = useState(0);
@@ -54,8 +58,8 @@ export const MotorInfo = () => {
               </Typography>
               <LineChart
                 key={key}
-                xAxis={[{ data: viewMotor1Data.time }]}
-                yAxis={[{ min: -150, max: 150 }]}
+                xAxis={[{ data: viewMotor1Data.time.length > 0 ? viewMotor1Data.time : calculatedTime }]}
+                yAxis={[{ min: -100, max: 100 }]}
                 series={[
                   {
                     data: viewMotor1Data.specifiedAngle,
@@ -67,6 +71,11 @@ export const MotorInfo = () => {
                     label: "Значение угла с энкодера (М1)",
                     showMark: false,
                   },
+                  {
+                    data: calculatedTheta1,
+                    label: "Расчитанное значение угла",
+                    showMark: false,
+                  }
                 ]}
                 skipAnimation={true}
                 height={300}
@@ -90,8 +99,8 @@ export const MotorInfo = () => {
                 </span>
               </Typography>
               <LineChart
-                xAxis={[{ data: viewMotor2Data.time }]}
-                yAxis={[{ min: -150, max: 150 }]}
+                xAxis={[{ data: viewMotor2Data.time.length > 0 ? viewMotor2Data.time : calculatedTime }]}
+                yAxis={[{ min: -100, max: 100 }]}
                 series={[
                   {
                     data: viewMotor2Data.specifiedAngle,
@@ -103,6 +112,11 @@ export const MotorInfo = () => {
                     label: "Значение угла с энкодера (М2)",
                     showMark: false,
                   },
+                  {
+                    data: calculatedTheta2,
+                    label: "Расчитанное значение угла",
+                    showMark: false,
+                  }
                 ]}
                 skipAnimation={true}
                 height={300}
@@ -125,8 +139,8 @@ export const MotorInfo = () => {
                 </span>
               </Typography>
               <LineChart
-                xAxis={[{ data: viewMotor3Data.time }]}
-                yAxis={[{ min: -150, max: 150 }]}
+                xAxis={[{ data: viewMotor3Data.time.length > 0 ? viewMotor3Data.time : calculatedTime }]}
+                yAxis={[{ min: -100, max: 100 }]}
                 series={[
                   {
                     data: viewMotor3Data.specifiedAngle,
@@ -138,6 +152,11 @@ export const MotorInfo = () => {
                     label: "Значение угла с энкодера (М3)",
                     showMark: false,
                   },
+                  {
+                    data: calculatedTheta3,
+                    label: "Расчитанное значение угла",
+                    showMark: false,
+                  }
                 ]}
                 height={300}
                 margin={{ left: 30, right: 30, top: 15, bottom: 30 }}
@@ -157,18 +176,14 @@ export const MotorInfo = () => {
                 Position X (real): {motorData.x}
               </Typography>
               <LineChart
-                xAxis={[{ data: viewMotor3Data.time }]}
-                yAxis={[{ min: -1, max: 1 }]}
+                xAxis={[{ data: viewPositionData.time }]}
+                yAxis={[{ min: -100, max: 100 }]}
                 series={[
                   {
-                    data: viewMotor3Data.pwm,
-                    label: "заданные значения X",
+                    data: viewPositionData.x,
+                    label: "X",
                     showMark: false,
-                  },
-                  {
-                    data: viewMotor3Data.pwm,
-                    label: "реальные значения X",
-                    showMark: false,
+                    curve: "monotoneX"
                   },
                 ]}
                 height={300}
@@ -184,18 +199,14 @@ export const MotorInfo = () => {
                 Position Y (real): {motorData.y}
               </Typography>
               <LineChart
-                xAxis={[{ data: viewMotor3Data.time }]}
-                yAxis={[{ min: -1, max: 1 }]}
+                xAxis={[{ data: viewPositionData.time }]}
+                yAxis={[{ min: -100, max: 100 }]}
                 series={[
                   {
-                    data: viewMotor3Data.pwm,
-                    label: "заданные значения Y",
+                    data: viewPositionData.y,
+                    label: "Y",
                     showMark: false,
-                  },
-                  {
-                    data: viewMotor3Data.pwm,
-                    label: "реальные значения Y",
-                    showMark: false,
+                    curve: "monotoneX"
                   },
                 ]}
                 height={300}
@@ -211,18 +222,14 @@ export const MotorInfo = () => {
                 Position Z (real): {motorData.z}
               </Typography>
               <LineChart
-                xAxis={[{ data: viewMotor3Data.time }]}
+                xAxis={[{ data: viewPositionData.time }]}
                 yAxis={[{ min: -400, max: -200 }]}
                 series={[
                   {
-                    data: viewMotor3Data.pwm,
-                    label: "заданные значения Z",
+                    data: viewPositionData.z,
+                    label: "Z",
                     showMark: false,
-                  },
-                  {
-                    data: viewMotor3Data.pwm,
-                    label: "реальные значения Z",
-                    showMark: false,
+                    curve: "monotoneX"
                   },
                 ]}
                 height={300}
