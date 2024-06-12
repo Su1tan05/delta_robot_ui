@@ -117,20 +117,24 @@ export const useLogic = () => {
     time: positionCircleArray.state.map((item) => item.time),
   };
 
+  const round = (value: number) => {
+    return Math.round(value * 1000) / 1000
+  }
+
   return {
     motorData: {
-      initialTheta1,
-      realTheta1,
-      initialTheta2,
-      realTheta2,
-      initialTheta3,
-      realTheta3,
-      motor1PWM,
-      motor2PWM,
-      motor3PWM,
-      x,
-      y,
-      z,
+      initialTheta1: round(initialTheta1),
+      realTheta1: round(realTheta1),
+      initialTheta2: round(initialTheta2),
+      realTheta2: round(realTheta2),
+      initialTheta3: round(initialTheta3),
+      realTheta3: round(realTheta3),
+      motor1PWM: round(motor1PWM),
+      motor2PWM: round(motor2PWM),
+      motor3PWM: round(motor3PWM),
+      x: round(x),
+      y: round(y),
+      z: round(z),
     },
     viewMotor1Data,
     viewMotor2Data,

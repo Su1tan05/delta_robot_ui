@@ -12,14 +12,14 @@ import { useLogic } from "./useLogic";
 export const ActionButtons = () => {
   const [selected, setSelected] = useState(false);
 
-  const {handleResetAll} = useLogic();
+  const {handleResetAll, handleStartButton} = useLogic();
   
   return (
     <Container>
     <Grid container spacing={2}>
       <Grid item xs={6}>
         <Tooltip title="Play">
-          <Button>
+          <Button onClick={handleStartButton}>
             <PlayIcon />
           </Button>
         </Tooltip>
