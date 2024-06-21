@@ -1,30 +1,40 @@
-# React + TypeScript + Vite
+# Delta-Robot UI
+This is a WEB interface for controling and visualizing sensor data of a Delta robot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+- Manual controll of th1, th2, th3 and X,Y,Z
+- Trajectory controll
+- Visualization of sensor data
+- User-friendly web interface
+- Real-time updates using WebSocket
+- PID values configuration
+- Upload file with trajectory points
+- Fill table with data from file
 
-Currently, two official plugins are available:
+## Preview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites
 
-- Configure the top-level `parserOptions` property like this:
+- Node.js (version 21.7.1)
+- npm (version 10.5.0)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Steps
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Su1tan05/delta-robot-ui.git
+
+2. Install packages:
+   ```bash
+   npm install
+
+3. Run application:
+   ```bash
+   npm run dev
+
+## Other required projects
+- https://github.com/Su1tan05/delta-robot-controller
+- https://github.com/Su1tan05/dc_motor_controll
