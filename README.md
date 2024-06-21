@@ -12,9 +12,9 @@ This is a WEB interface for controling and visualizing sensor data of a Delta ro
 - Fill table with data from file
 
 ## Preview
-[![Video](https://raw.githubusercontent.com/Su1tan05/delta_robot_ui/master/attachments/delta.png)](https://raw.githubusercontent.com/Su1tan05/delta_robot_ui/master/attachments/test.mp4)
+![Video Preview](https://raw.githubusercontent.com/Su1tan05/delta_robot_ui/master/attachments/delta_ui.gif)
 
-
+![Plan](https://raw.githubusercontent.com/Su1tan05/delta_robot_ui/master/attachments/delta.png)
 
 ## Installation
 
@@ -37,6 +37,6 @@ This is a WEB interface for controling and visualizing sensor data of a Delta ro
    ```bash
    npm run dev
 
-## Other required projects
+## required projects
 - https://github.com/Su1tan05/delta-robot-controller
 - https://github.com/Su1tan05/dc_motor_controll
