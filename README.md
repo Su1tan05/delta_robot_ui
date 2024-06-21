@@ -12,6 +12,8 @@ This is a WEB interface for controling and visualizing sensor data of a Delta ro
 - Fill table with data from file
 
 ## Preview
+[![Video](https://raw.githubusercontent.com/Su1tan05/delta_robot_ui/master/attachments/delta.png)](https://raw.githubusercontent.com/Su1tan05/delta_robot_ui/master/attachments/test.mp4)
+
 
 
 ## Installation
